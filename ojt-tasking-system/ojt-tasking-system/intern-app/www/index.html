@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OJT Intern</title>
+<style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#14161c;--card:#1b1e26;--card2:#232732;--line:#2b303b;--tx:#dcdfe6;--mut:#9097a8;--acc:#7c9cff;--accbg:rgba(124,156,255,.14);--ok:#5fc59a;--pen:#e6b85c;--bad:#e57f7f;--tx2:#b6bccb;--ph:#6d7485;--line2:#3a4050;--onacc:#0f1220;--toastbad:#2a1d1f;--toastok:#17261f;--fl:74%;color-scheme:dark}
+:root[data-theme="light"]{--bg:#f3f5f9;--card:#ffffff;--card2:#eff2f7;--line:#dfe3ec;--tx:#1d2330;--mut:#5e6678;--acc:#4361ee;--accbg:rgba(67,97,238,.10);--ok:#178a5c;--pen:#a86a00;--bad:#c9383f;--tx2:#454d5f;--ph:#8a92a5;--line2:#c3c9d8;--onacc:#ffffff;--toastbad:#fdeaea;--toastok:#e5f6ee;--fl:32%;color-scheme:light}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+body.intern{--acc:#5ec8b8;--accbg:rgba(94,200,184,.14)}
+:root[data-theme="light"] body.intern{--acc:#0f8f80;--accbg:rgba(15,143,128,.12)}
+.tabs{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+header{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid var(--line);background:var(--card);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+h1{font-size:17px;font-weight:650;margin:0;letter-spacing:.2px}
+h2{font-size:16px;font-weight:600;margin:0 0 12px}
+main{max-width:1100px;margin:0 auto;padding:22px 18px 96px}
+.ph{margin-bottom:18px}.ph h2{font-size:22px;margin:0}.ph p{margin:4px 0 0;color:var(--mut);font-size:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.grid{display:grid;gap:16px}.stats{grid-template-columns:repeat(2,1fr)}
+.stat b{display:block;font-size:30px;font-weight:650;line-height:1.15}.stat span{color:var(--mut);font-size:13px}
+.stat:has(.done){border-top:3px solid var(--ok)}.stat:has(.pending){border-top:3px solid var(--pen)}.stat:has(.unfinished){border-top:3px solid var(--bad)}
+@media(min-width:700px){.stats{grid-template-columns:repeat(4,1fr)}.two{grid-template-columns:1fr 1fr;align-items:start}}
+form{display:grid;gap:12px}
+label{font-size:13px}
+button,select,input,textarea{font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-height:42px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--acc);outline-offset:0;border-color:transparent}
+::placeholder{color:var(--ph)}
+button{cursor:pointer;background:var(--acc);border-color:var(--acc);color:var(--onacc);font-weight:600;padding:9px 16px;transition:filter .15s,background .15s}
+button:hover{filter:brightness(1.1)}
+button.ghost{background:transparent;color:var(--tx);border-color:var(--line)}
+button.ghost:hover{background:var(--card2);filter:none}
+button.ghost.on{background:var(--accbg);border-color:var(--acc);color:var(--acc)}
+button.sm{min-height:36px;padding:6px 12px;font-size:14px}
+button.sbtn{min-height:46px;color:var(--mut);text-transform:capitalize}
+button.sbtn.pending.on{background:color-mix(in srgb,var(--pen) 16%,transparent);border-color:var(--pen);color:var(--pen)}
+button.sbtn.done.on{background:color-mix(in srgb,var(--ok) 16%,transparent);border-color:var(--ok);color:var(--ok)}
+button.sbtn.unfinished.on{background:color-mix(in srgb,var(--bad) 16%,transparent);border-color:var(--bad);color:var(--bad)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.row>*{flex:1 1 140px}
+.task{border-top:1px solid var(--line);padding:14px 0;display:grid;gap:6px}.task:first-of-type{border-top:0;padding-top:4px}
+details.task summary{cursor:pointer;line-height:1.7}
+.meta{color:var(--mut);font-size:14px}
+.pill{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:600;border:1px solid transparent;text-transform:capitalize}
+.pill.pending{background:color-mix(in srgb,var(--pen) 16%,transparent)}.pill.done{background:color-mix(in srgb,var(--ok) 16%,transparent)}.pill.unfinished{background:color-mix(in srgb,var(--bad) 16%,transparent)}
+.pending{color:var(--pen)}.done{color:var(--ok)}.unfinished{color:var(--bad)}
+.chip{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--mut);border-radius:99px;padding:1px 10px;margin:2px 2px 2px 0;font-size:13px}
+.bar{height:10px;background:var(--bg);border-radius:9px;overflow:hidden;display:flex}
+.empty{color:var(--mut);padding:8px 0}
+a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
+.od{color:var(--bad);font-weight:600}
+.shell{display:grid;gap:16px}
+.side{display:flex;position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);z-index:6;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
+.side a{flex:1;text-align:center;color:var(--mut);font-size:12px;padding:6px 2px;border-radius:10px}.side a:hover{text-decoration:none}
+.side a span{display:block;font-size:18px}.side a.on{color:var(--acc);background:var(--accbg)}
+@media(min-width:800px){.shell{grid-template-columns:200px 1fr;gap:24px}.side{position:sticky;top:78px;align-self:start;flex-direction:column;gap:4px;border:1px solid var(--line);border-radius:14px;padding:8px}.side a{text-align:left;font-size:15px;padding:10px 12px}.side a span{display:inline;font-size:16px;margin-right:8px}main{padding-bottom:28px}}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--toastbad);border:1px solid var(--bad);color:var(--tx);padding:10px 16px;border-radius:12px;z-index:30;max-width:90vw}.toast.ok{background:var(--toastok);border-color:var(--ok)}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:20;padding:16px}.mdl{width:100%;max-width:420px;display:grid;gap:10px}.mdl p{margin:0 0 4px}
+details.ic{background:var(--card2);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;transition:border-color .2s}
+details.ic:hover{border-color:var(--line2)}details.ic[open]{border-color:var(--acc)}
+details.ic summary{list-style:none;display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer;user-select:none}
+details.ic summary::-webkit-details-marker{display:none}
+.av{width:40px;height:40px;border-radius:50%;background:var(--accbg);color:var(--acc);display:grid;place-items:center;font-weight:650;font-size:14px;flex:0 0 auto}
+.ib{flex:1;display:grid;min-width:0;line-height:1.35}.ib b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.seg{width:96px;flex:0 0 auto}.seg .bar{height:8px}
+.chev{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--bg);color:var(--mut);flex:0 0 auto;transition:transform .25s,color .2s}
+details.ic[open]>summary .chev{transform:rotate(180deg);color:var(--acc)}
+.det{display:grid;gap:12px;padding:2px 14px 14px;align-items:start}
+@media(min-width:700px){.det{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:480px){.seg{display:none}}
+.sc{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:8px;align-content:start;border-top:3px solid var(--line)}
+.sc.done{border-top-color:var(--ok)}.sc.pending{border-top-color:var(--pen)}.sc.unfinished{border-top-color:var(--bad)}
+.sh{display:flex;justify-content:space-between;align-items:center}.sh b{font-size:18px}
+.ti{background:var(--card2);border-radius:8px;padding:8px 10px;display:grid;gap:2px;font-size:15px}.ti small{font-size:13px}
+.fg{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));margin-top:14px}
+.fc{background:var(--card);border:1px solid var(--line);border-top:3px solid hsl(var(--h) 55% 60%);border-radius:14px;padding:16px;display:grid;gap:10px;transition:transform .15s}
+.fc:hover{transform:translateY(-2px)}
+.fh{display:flex;justify-content:space-between;align-items:center}
+.fi{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-weight:700;background:hsl(var(--h) 60% 65% / .16);color:hsl(var(--h) 65% var(--fl))}
+.fn{font-size:17px;line-height:1.3;word-break:break-word;flex:1;min-width:0}
+.fm{display:flex;gap:14px;flex-wrap:wrap;color:var(--mut);font-size:14px}.fm b{color:var(--tx)}
+button.x{min-height:34px;width:34px;padding:0;display:grid;place-items:center}button.x:hover{color:var(--bad);border-color:var(--bad)}
+.emp{text-align:center;padding:30px 18px;border:1px dashed var(--line);border-radius:14px;color:var(--mut);margin-top:14px}
+.sub{display:flex;justify-content:space-between;align-items:baseline;margin-top:22px}.sub h2{margin:0}
+.sc.done,.sc.pending,.sc.unfinished{color:var(--tx)}
+.tb{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}.tb select{min-width:220px}
+.tg{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(min(330px,100%),1fr))}
+.tk{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pen);border-radius:14px;padding:16px;display:grid;gap:12px;align-content:start}
+.tk.s-done{border-left-color:var(--ok)}.tk.s-unfinished{border-left-color:var(--bad)}
+.th{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.tn{font-size:17px;line-height:1.3;display:block;margin-bottom:6px;word-break:break-word}
+.ta{display:flex;gap:6px;flex:0 0 auto}
+.td{margin:0;color:var(--tx2);font-size:15px}
+.tdue{font-size:14px;color:var(--mut)}
+.tp{display:grid;gap:6px}
+.tl{display:grid;gap:8px;border-top:1px solid var(--line);padding-top:12px}
+.tr{display:flex;align-items:center;gap:10px}.tnm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:15px}
+.av.sm{width:28px;height:28px;font-size:11px}
+.ig{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));margin-bottom:8px}
+.ic2{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:12px}
+.gh{display:flex;align-items:center;gap:8px;margin:18px 0 10px}
+.badge{font-size:13px;color:var(--mut);font-weight:600}.badge.ok{color:var(--ok)}
+.scr{max-height:min(55vh,440px);overflow-y:auto;overscroll-behavior:contain;display:grid;gap:8px;padding-right:4px;scrollbar-width:thin;scrollbar-color:var(--line2) transparent}
+button.pk{display:flex;align-items:center;justify-content:flex-start;gap:12px;text-align:left;width:100%;min-height:58px;padding:9px 12px}
+button:disabled{opacity:.4;cursor:not-allowed;filter:none}
+.chev.sm{width:28px;height:28px}
+.sd{background:var(--bg);border:1px solid var(--line);border-top:3px solid var(--line);border-radius:12px}
+.sd.s-done{border-top-color:var(--ok)}.sd.s-pending{border-top-color:var(--pen)}.sd.s-unfinished{border-top-color:var(--bad)}
+.sd>summary{list-style:none;display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;user-select:none}
+.sd>summary::-webkit-details-marker{display:none}.sd>summary b{margin-left:auto;font-size:16px}
+.sd[open]>summary .chev{transform:rotate(180deg);color:var(--acc)}
+.sl{max-height:250px;overflow-y:auto;overscroll-behavior:contain;padding:0 10px 10px;display:grid;gap:8px;scrollbar-width:thin;scrollbar-color:var(--line2) transparent}
+.tr2{background:var(--card);border:1px solid var(--line);border-radius:12px}.tr2[open]{border-color:var(--acc)}
+.tr2>summary{list-style:none;display:flex;align-items:center;gap:10px;padding:11px 12px;cursor:pointer;user-select:none}
+.tr2>summary::-webkit-details-marker{display:none}
+.tr2[open]>summary .chev{transform:rotate(180deg);color:var(--acc)}
+.dot{width:10px;height:10px;border-radius:50%;flex:0 0 auto;background:var(--pen)}.dot.s-done{background:var(--ok)}.dot.s-unfinished{background:var(--bad)}
+.tbody{padding:2px 14px 14px;display:grid;gap:10px}
+.tr2{border-left:4px solid var(--pen);padding:12px;display:grid;gap:10px}
+.tr2.s-done{border-left-color:var(--ok)}.tr2.s-unfinished{border-left-color:var(--bad)}
+.tq{display:flex;gap:10px;align-items:flex-start}.tq .dot{margin-top:7px}.tq .ib b{white-space:normal;overflow:visible}
+.dd>summary{cursor:pointer;color:var(--acc);font-size:14px;list-style:none;user-select:none}.dd>summary::-webkit-details-marker{display:none}
+.dd>summary::after{content:' ▾'}.dd[open]>summary::after{content:' ▴'}.dd>p{margin:8px 0 0}
+.seg3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.seg3 button{padding:8px 4px;font-size:13px;min-height:42px;white-space:nowrap}
+.hide{display:none}
+</style><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script><script src="firebase-config.js"></script><script>window.PORTAL='intern'</script></head><body>
+<header><h1 id="brand"></h1><div class="tabs"><span id="nav"></span><button id="thm" type="button" class="ghost sm"></button></div></header>
+<main id="app"><p class="empty">Loading…</p></main>
+<script>
+function applyTheme(t){document.documentElement.dataset.theme=t;const b=document.getElementById('thm');if(b)b.textContent=t==='dark'?'☀️ Light mode':'🌙 Dark mode'}
+try{applyTheme(localStorage.getItem('ojt-theme')||'dark')}catch(e){applyTheme('dark')}
+document.getElementById('thm').onclick=()=>{const t=document.documentElement.dataset.theme==='light'?'dark':'light';applyTheme(t);try{localStorage.setItem('ojt-theme',t)}catch(e){}};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const S={db:null,uid:null,admin:false,mode:'admin',tab:'dash',fields:[],interns:[],tasks:[],filter:'all',ifilter:'all',ifil:'all',pfil:'all',open:{},prog:{},viewAs:null,auth:null,ready:false};
+const st=(t,u)=>{const v=(S.prog[t.id+'_'+u]||{}).status||'pending';return v==='pending'&&lapsed(t)?'unfinished':v};
+const targets=t=>S.interns.filter(i=>i.field===t.field&&(!t.assigneeId||t.assigneeId===i.id));
+const nameOf=id=>(S.interns.find(i=>i.id===id)||{}).name||'Unknown';
+function pairs(){const p=[];S.tasks.forEach(t=>{const ts=targets(t);if(!ts.length)p.push({t,u:null,s:lapsed(t)?'unfinished':'pending'});else ts.forEach(i=>p.push({t,u:i.id,s:st(t,i.id)}))});return p}
+
+function ask(msg,fields){fields=fields||[];return new Promise(res=>{const o=document.createElement('div');o.className='ov';
+ o.innerHTML=`<div class="card mdl"><p><b>${esc(msg)}</b></p>${fields.map(f=>`<label class="meta">${esc(f.l)}</label>`+(f.t==='textarea'?`<textarea rows="3" data-k="${f.k}"></textarea>`:f.t==='select'?`<select data-k="${f.k}">${f.o.map(x=>`<option>${esc(x)}</option>`).join('')}</select>`:`<input ${f.t==='date'?'type="date"':''} data-k="${f.k}">`)).join('')}<div class="row"><button class="ghost" data-x="0">Cancel</button><button data-x="1">OK</button></div></div>`;
+ fields.forEach(f=>{o.querySelector('[data-k="'+f.k+'"]').value=f.v||''});
+ o.onclick=e=>{const x=e.target.dataset.x;if(x===undefined&&e.target!==o)return;const v={};o.querySelectorAll('[data-k]').forEach(i=>v[i.dataset.k]=i.value);o.remove();res(x==='1'?v:null)};
+ document.body.appendChild(o)})}
+function toast(m,ok){const t=document.createElement('div');t.className='toast'+(ok?' ok':'');t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),3500)}
+async function run(fn,okMsg){try{await fn();if(okMsg)toast(okMsg,1);return true}catch(e){console.error(e);toast('Action failed: '+((e&&e.message)||'no permission or no connection. Please try again.'));return false}}
+const fd=d=>{const x=new Date(d+'T00:00:00');return isNaN(x)?d:x.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'})};
+const ini=n=>esc((n||'?').trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase());
+const IC={undo:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5M4 9h10a6 6 0 010 12h-3"/></svg>',trash:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>',pen:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>'};
+const today=()=>new Date().toLocaleDateString('en-CA');
+const dayOf=t=>t.due||(t.createdAt?new Date(t.createdAt).toLocaleDateString('en-CA'):'');
+const lapsed=t=>{const d=dayOf(t);return !!d&&d<today()};
+const over=t=>!!t.due&&t.due<today();
+let dirty=false;
+let raf=0;
+function render(){if(raf)return;raf=requestAnimationFrame(()=>{raf=0;const a=document.activeElement;if(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)&&a.form){dirty=true;return}dirty=false;
+ const sc=[...document.querySelectorAll('.scr')].map(x=>x.scrollTop),wy=window.scrollY;draw();
+ document.querySelectorAll('.scr').forEach((x,i)=>{if(sc[i])x.scrollTop=sc[i]});if(wy)window.scrollTo(0,wy)})}
+document.addEventListener('focusout',()=>setTimeout(()=>{if(dirty&&!(document.activeElement&&document.activeElement.form))render()},50));
+function draw(){
+  if(PORTAL!=='admin'&&(!S.ready||!S.internsOk)){$('#brand').textContent='🎓 Intern Portal';$('#app').innerHTML='<p class="empty">Loading…</p>';return}
+  const a=$('#app'),ad=PORTAL==='admin',me=ad?S.interns.find(i=>i.id===S.viewAs):S.interns.find(i=>i.claimedBy===S.uid),admin=ad&&!S.viewAs;
+  document.body.className=admin?'':'intern';
+  $('#brand').textContent=ad?(S.viewAs?'👁 Viewing as intern':'🛠 Admin Portal'):'🎓 Intern Portal';
+  $('#nav').innerHTML=ad?(S.viewAs?`<button class="ghost sm" data-va="0">← Back to admin</button>`:`<button class="ghost sm" data-so="1">Sign out</button>`):(me?`<span class="meta">${esc(me.name)}</span>`:'');
+  if(admin){const H={dash:['Dashboard','Progress of every task across your interns.'],tasks:['Create Task','Assign work to a whole OJT field or to one intern.'],all:['All Tasks','Every task given, with the status per intern.'],fields:['OJT Fields','The courses or fields your interns belong to.'],interns:['Interns','Your roster. Interns pick their name from this list.']};
+  const T={dash:['📊','Dashboard'],tasks:['➕','Create Task'],all:['📋','All Tasks'],fields:['🏷','Fields'],interns:['👥','Interns']};
+    a.innerHTML=`<div class="shell"><nav class="side">${Object.entries(T).map(([k,v])=>`<a href="#" class="${S.tab===k?'on':''}" data-t="${k}"><span>${v[0]}</span>${v[1]}</a>`).join('')}</nav><section><div class="ph"><h2>${H[S.tab][0]}</h2><p>${H[S.tab][1]}</p></div>${adminView()}</section></div>`;return}
+  a.innerHTML=me?internView(me):onboard();
+}
+function adminView(){
+  const p=pairs(),c=k=>p.filter(x=>x.s===k).length,n=p.length||1;
+  if(S.tab==='dash')return `<div class="grid stats">
+   <div class="card stat"><b>${S.tasks.length}</b><span>Tasks created</span></div>
+   <div class="card stat"><b class="done">${c('done')}</b><span>Done</span></div>
+   <div class="card stat"><b class="pending">${c('pending')}</b><span>Pending</span></div>
+   <div class="card stat"><b class="unfinished">${c('unfinished')}</b><span>Unfinished</span></div></div>
+   <div class="card" style="margin-top:12px"><h2>Overall progress</h2><div class="bar"><i style="width:${c('done')/n*100}%;background:var(--ok)"></i><i style="width:${c('pending')/n*100}%;background:var(--pen)"></i><i style="width:${c('unfinished')/n*100}%;background:var(--bad)"></i></div></div>
+   <div class="card" style="margin-top:12px"><h2>Tasks by intern</h2><p class="meta" style="margin:-6px 0 8px">Tap an intern to open their tasks.</p>${S.interns.length?S.interns.map(i=>{const q=p.filter(x=>x.u===i.id),g=k=>q.filter(x=>x.s===k),n=q.length||1,w=k=>g(k).length/n*100;
+ const col=(k,l)=>`<details class="sd s-${k}" data-o="${i.id}:${k}" ${S.open[i.id+':'+k]?'open':''}><summary><span class="pill ${k}">${l}</span><b>${g(k).length}</b><span class="chev sm"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></summary><div class="sl">${g(k).map(x=>`<div class="ti"><span>${esc(x.t.title)}</span><small class="meta">${x.t.due?'Due '+esc(fd(x.t.due)):'No due date'}${k!=='done'&&over(x.t)?' · <span class=od>overdue</span>':''}</small></div>`).join('')||'<div class="meta">None</div>'}</div></details>`;
+ return `<details class="ic" data-o="${i.id}" ${S.open[i.id]?'open':''}><summary><span class="ib"><b>${esc(i.name)}</b><span class="meta">${esc(i.field)} · ${q.length} task${q.length===1?'':'s'}</span></span><span class="seg"><span class="bar"><i style="width:${w('done')}%;background:var(--ok)"></i><i style="width:${w('pending')}%;background:var(--pen)"></i><i style="width:${w('unfinished')}%;background:var(--bad)"></i></span></span><span class="chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></summary>${q.length?`<div class="det">${col('done','Done List')}${col('pending','Pending List')}${col('unfinished','Unfinished List')}</div>`:'<div class="det meta">No tasks given yet.</div>'}</details>`}).join(''):'<p class="empty">No interns on the roster yet. Add them in the Interns tab.</p>'}</div>
+   ${S.tasks.length||S.fields.length?'':'<div class="card" style="margin-top:12px"><h2>New here?</h2><p class="meta">Load a small sample project to see how it works.</p><button id="seed">Load sample data</button></div>'}`;
+  if(S.tab==='fields'){
+    const trash='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>';
+    return `<div class="card"><h2>Add a new field</h2><form id="ff" class="row"><input name="n" placeholder="e.g. Information Technology" required><button style="flex:0 0 auto">+ Add field</button></form></div>
+    <div class="sub"><h2>Your fields</h2><span class="meta">${S.fields.length} total</span></div>
+    ${S.fields.length?`<div class="fg">${S.fields.map((f,ix)=>{const ni=S.interns.filter(i=>i.field===f.name).length;return `<div class="fc" style="--h:${(ix*57+215)%360}"><div class="fh"><b class="fn">${esc(f.name)}</b><button class="ghost x" data-df="${f.id}" aria-label="Delete ${esc(f.name)}" title="Delete field">${trash}</button></div><div class="fm"><span><b>${ni}</b> intern${ni===1?'':'s'}</span></div></div>`}).join('')}</div>`:'<div class="emp">No OJT fields yet.<br>Add your first one above, or use a quick-add button.</div>'}`}
+  if(S.tab==='interns'){
+    const names=S.fields.map(f=>f.name);S.interns.forEach(i=>{if(!names.includes(i.field))names.push(i.field)});
+    const list=S.interns.filter(i=>S.ifil==='all'||i.field===S.ifil).sort((a,b)=>(a.name||'').localeCompare(b.name||''));
+    const card=i=>`<div class="ic2"><div class="ib"><b>${esc(i.name)}</b><span class="meta">${esc(i.field)} · <span class="badge ${i.claimedBy?'ok':''}">${i.claimedBy?'● Joined':'○ Not joined yet'}</span></span></div><div class="ta"><button class="ghost sm" data-vi="${i.id}" title="Open this intern's task view">View</button>${i.claimedBy?`<button class="ghost x" data-rel="${i.id}" title="Release name" aria-label="Release name">${IC.undo}</button>`:''}<button class="ghost x" data-ei="${i.id}" title="Edit intern" aria-label="Edit intern">${IC.pen}</button><button class="ghost x" data-di="${i.id}" title="Remove intern" aria-label="Remove intern">${IC.trash}</button></div></div>`;
+    return `<div class="card"><h2>Add intern</h2><form id="rf" class="row"><input name="n" placeholder="Intern full name" required><select name="f" required><option value="">Course / OJT field…</option>${S.fields.map(f=>`<option>${esc(f.name)}</option>`).join('')}</select><button style="flex:0 0 auto">+ Add to roster</button></form>${S.fields.length?'':'<p class="meta" style="margin:10px 0 0">Add an OJT field first.</p>'}</div>
+    <div class="card" style="margin-top:16px"><p class="meta" style="margin:0"><b style="color:var(--ok)">● Joined</b> means the intern already picked this name in the Intern Portal. <b>○ Not joined yet</b> means the name is on your roster, but the intern has not picked it yet. Use the ↩ button to release a name if someone picked the wrong one.</p></div>
+    <div class="tb" style="margin-top:22px"><div><h2 style="margin:0">Roster</h2><span class="meta">${list.length} intern${list.length===1?'':'s'}${S.ifil==='all'?'':' in '+esc(S.ifil)} · ${list.filter(i=>i.claimedBy).length} joined</span></div><select id="iflt"><option value="all">All fields</option>${names.map(n=>`<option ${S.ifil===n?'selected':''}>${esc(n)}</option>`).join('')}</select></div>
+    ${list.length?`<div class="ig">${list.map(card).join('')}</div>`:'<div class="emp">'+(S.interns.length?'No interns in this field.':'No interns on the roster yet.<br>Add your first intern above.')+'</div>'}`}
+  const list=S.tasks.filter(t=>S.filter==='all'||t.field===S.filter);
+  const create=`<div class="card" style="max-width:560px"><h2>Create task</h2><form id="tf">
+    <input name="title" placeholder="Task title" required><textarea name="desc" rows="3" placeholder="Details / instructions"></textarea>
+    <select name="field" required><option value="">OJT field…</option>${S.fields.map(f=>`<option>${esc(f.name)}</option>`).join('')}</select>
+    <select name="who"><option value="">All interns in that field</option>${S.interns.map(i=>`<option value="${i.id}">${esc(i.name)} (${esc(i.field)})</option>`).join('')}</select>
+    <input type="date" name="due"><button>Add task</button></form>${S.fields.length?'':'<p class="meta">Add an OJT field first.</p>'}</div>`;
+  const all=`<div class="tb"><select id="flt"><option value="all">All fields</option>${S.fields.map(f=>`<option ${S.filter===f.name?'selected':''}>${esc(f.name)}</option>`).join('')}</select><span class="meta">${list.length} task${list.length===1?'':'s'}</span></div>
+  ${list.length?`<div class="tg">${list.map(t=>{
+   const ts=targets(t),c=k=>ts.filter(i=>st(t,i.id)===k).length,d=c('done'),pc=c('pending'),u=c('unfinished'),n=ts.length||1;
+   const ov=ts.length?(d===ts.length?'done':u?'unfinished':'pending'):'pending',who=t.assigneeId?nameOf(t.assigneeId):'All '+t.field+' interns';
+   return `<article class="tk s-${ov}"><div class="th"><div style="min-width:0"><b class="tn">${esc(t.title)}</b><span class="chip">${esc(t.field)}</span><span class="chip">${esc(who)}</span></div><div class="ta"><button class="ghost x" data-et="${t.id}" title="Edit task" aria-label="Edit task">${IC.pen}</button><button class="ghost x" data-dt="${t.id}" title="Delete task" aria-label="Delete task">${IC.trash}</button></div></div>
+   ${t.desc?`<p class="td">${esc(t.desc)}</p>`:''}
+   <div class="tdue">${t.due?'📅 Due '+esc(fd(t.due)):'No due date'}${over(t)&&ov!=='done'?' <span class="od">· overdue</span>':''}</div>
+   <div class="tp"><div class="bar"><i style="width:${d/n*100}%;background:var(--ok)"></i><i style="width:${pc/n*100}%;background:var(--pen)"></i><i style="width:${u/n*100}%;background:var(--bad)"></i></div><span class="meta">${ts.length?d+' of '+ts.length+' done':'No interns in this field yet'}</span></div>
+   ${ts.length?`<div class="tl">${ts.map(i=>`<div class="tr"><span class="tnm">${esc(i.name)}</span><span class="pill ${st(t,i.id)}">${st(t,i.id)}</span></div>`).join('')}</div>`:''}</article>`}).join('')}</div>`:'<div class="emp">No tasks yet.<br>Create one from the Create Task page.</div>'}`;
+  return S.tab==='all'?all:create;
+}
+function onboard(){const free=S.interns.filter(i=>!i.claimedBy);
+ const fl=[...new Set([...S.fields.map(f=>f.name),...free.map(i=>i.field)])].filter(n=>free.some(i=>i.field===n));
+ if(S.pfil!=='all'&&!fl.includes(S.pfil))S.pfil='all';
+ const list=free.filter(i=>S.pfil==='all'||i.field===S.pfil).sort((a,b)=>(a.name||'').localeCompare(b.name||''));
+ return `<div class="card" style="max-width:460px;margin:auto"><h2>Who are you?</h2><p class="meta" style="margin:-4px 0 0">Pick your name from the list your admin prepared. Once picked, it is locked to you.</p>
+ ${free.length?`<div class="tb" style="margin:16px 0 10px"><select id="pflt" style="flex:1;min-width:0"><option value="all">All fields</option>${fl.map(n=>`<option ${S.pfil===n?'selected':''}>${esc(n)}</option>`).join('')}</select><span class="meta">${list.length} name${list.length===1?'':'s'}</span></div>
+ <div class="scr">${list.map(i=>`<button class="ghost pk" data-claim="${i.id}"><span class="av">${ini(i.name)}</span><span class="ib"><b>${esc(i.name)}</b><span class="meta">${esc(i.field)}</span></span></button>`).join('')||'<p class="empty">No names in this field.</p>'}</div>`:'<p class="empty">No names available yet. Ask your admin to add you to the roster.</p>'}</div>`}
+function internView(me){
+  const rank={pending:0,unfinished:1,done:2},f=S.ifilter;
+  const mine=S.tasks.filter(t=>t.field===me.field&&(!t.assigneeId||t.assigneeId===me.id)),c=k=>mine.filter(t=>st(t,me.id)===k).length;
+  const list=mine.filter(t=>f==='all'||st(t,me.id)===f).sort((a,b)=>rank[st(a,me.id)]-rank[st(b,me.id)]||(a.due||'9999').localeCompare(b.due||'9999')||(b.createdAt||0)-(a.createdAt||0));
+  const dn=mine.length?Math.round(c('done')/mine.length*100):0;
+  return `<div style="max-width:640px;margin:auto">${PORTAL==='admin'?'':`<button class="ghost sm" data-rel="${me.id}" data-back="1" style="margin-bottom:12px">← Back to choose identity</button>`}
+  <div class="card"><h2>Hi ${esc(me.name)} 👋</h2><span class="chip">${esc(me.field)}</span>
+  <p class="meta" style="margin:10px 0 6px">${c('done')} of ${mine.length} tasks done (${dn}%)</p><div class="bar"><i style="width:${dn}%;background:var(--acc)"></i></div></div>
+  <div class="row" style="margin:12px 0;flex-wrap:nowrap;overflow-x:auto">${['all','pending','done','unfinished'].map(k=>`<button class="ghost sm ${f===k?'on':''}" data-f="${k}" style="flex:0 0 auto">${k==='all'?'All ('+mine.length+')':k+' ('+c(k)+')'}</button>`).join('')}</div>
+  <div class="scr" style="max-height:min(66vh,600px)">${list.map(t=>{
+   const s=st(t,me.id),raw=(S.prog[t.id+'_'+me.id]||{}).status||'pending',auto=raw==='pending'&&s==='unfinished',lp=lapsed(t);
+   return `<div class="tr2 s-${s}"><div class="tq"><span class="dot s-${s}"></span><span class="ib"><b>${esc(t.title)}</b><span class="meta">${t.due?'Due '+esc(fd(t.due)):'No due date'}${over(t)&&s!=='done'?' · <span class="od">overdue</span>':''}</span></span></div>
+   ${t.desc||auto?`<details class="dd" data-o="t:${t.id}" ${S.open['t:'+t.id]?'open':''}><summary>Details</summary>${t.desc?`<p class="td">${esc(t.desc)}</p>`:''}${auto?'<p class="meta">Auto-marked unfinished because its day has passed. You can still mark it done.</p>':''}</details>`:''}
+   <div class="seg3">${['pending','done','unfinished'].map(k=>`<button class="ghost sbtn ${k} ${s===k?'on':''}" data-s="${k}" data-id="${t.id}" ${k==='pending'&&lp?'disabled':''}>${k}</button>`).join('')}</div></div>`}).join('')||'<div class="card empty">Nothing here yet.</div>'}</div></div>`}
+
+document.addEventListener('click',async e=>{
+  const b=e.target.closest('[data-so],[data-va],[data-vi],[data-ei],[data-sf],[data-claim],[data-rel],[data-f],[data-m],[data-t],[data-s],[data-df],[data-dt],[data-et],[data-di],#seed');if(!b)return;e.preventDefault();
+  const d=b.dataset;
+  if(d.so){S.auth.signOut().then(()=>location.reload())}
+  else if(d.va!==undefined){S.viewAs=null;render()}
+  else if(d.vi){S.viewAs=d.vi;render()}
+  else if(d.claim)run(async()=>{const u=await ensureUser();S.uid=u.uid;subRoster();await S.db.runTransaction(async tx=>{const ref=S.db.doc('interns/'+d.claim),a=await tx.get(ref),c=a.exists&&a.data().claimedBy;if(!a.exists||(c&&c!==S.uid))throw new Error('That name was just taken.');tx.update(ref,{claimedBy:S.uid})});subs()},'Identity confirmed');
+  else if(d.rel){ask(d.back?'Go back and choose a different name? Your current name will be freed for others.':'Release this name so it can be picked again?').then(v=>{if(v)run(()=>S.db.doc('interns/'+d.rel).update({claimedBy:''}),d.back?'Pick your name again':'Name released')})}
+  else if(d.f){S.ifilter=d.f;render()}else if(d.m){S.mode=d.m;render()}else if(d.t){S.tab=d.t;render()}
+  else if(d.s){const mid=S.viewAs||(S.interns.find(i=>i.claimedBy===S.uid)||{}).id,k=d.id+'_'+mid,prev=S.prog[k];if(!mid)return;S.prog[k]={taskId:d.id,internId:mid,status:d.s};render();run(()=>S.db.doc('progress/'+k).set({taskId:d.id,internId:mid,status:d.s,updatedAt:firebase.firestore.FieldValue.serverTimestamp()})).then(ok=>{if(!ok){if(prev)S.prog[k]=prev;else delete S.prog[k];render()}})}
+  else if(d.sf)run(()=>S.db.collection('fields').add({name:d.sf}),'Field added');
+  else if(d.df){const f=S.fields.find(x=>x.id===d.df)||{},ni=S.interns.filter(i=>i.field===f.name).length,nt=S.tasks.filter(t=>t.field===f.name).length;ask('Delete "'+f.name+'"?'+(ni||nt?' It is used by '+ni+' intern(s) and '+nt+' task(s), which will stay but lose a matching field.':'')).then(v=>{if(v)run(()=>S.db.doc('fields/'+d.df).delete(),'Field deleted')})}
+  else if(d.ei){const i=S.interns.find(x=>x.id===d.ei);if(!i)return;const nm=S.fields.map(f=>f.name);if(!nm.includes(i.field))nm.push(i.field);ask('Edit intern',[{k:'n',l:'Full name',v:i.name},{k:'f',l:'Course / OJT field',v:i.field,t:'select',o:nm}]).then(v=>{if(v&&v.n.trim())run(()=>S.db.doc('interns/'+i.id).update({name:v.n.trim(),field:v.f}),'Intern updated')})}
+  else if(d.di){ask('Remove this intern from the roster?').then(v=>{if(v)run(()=>S.db.doc('interns/'+d.di).delete())})}
+  else if(d.et){const t=S.tasks.find(x=>x.id===d.et);ask('Edit task',[{k:'ti',l:'Title',v:t.title},{k:'de',l:'Details',v:t.desc||'',t:'textarea'},{k:'du',l:'Due date',v:t.due||'',t:'date'}]).then(v=>{if(v)run(()=>S.db.doc('tasks/'+t.id).update({title:v.ti.trim()||t.title,desc:v.de.trim(),due:v.du}),'Task updated')})}
+  else if(d.dt){ask('Delete this task?').then(v=>{if(v)run(()=>S.db.doc('tasks/'+d.dt).delete())})}
+  else if(b.id==='seed')run(async()=>{for(const n of['IT','Computer Science','Business Administration'])await S.db.collection('fields').add({name:n});
+    const T=[['Set up office workstation','Install required software and test network access.','IT'],['Write a bug report','Document 3 issues found in the sample app.','Computer Science'],['Prepare weekly report','Summarize this week\'s activities in one page.','Business Administration']];
+    for(const[x,y,z]of T)await S.db.collection('tasks').add({title:x,desc:y,field:z,assigneeId:'',due:'',statuses:{},createdAt:Date.now()})},'Sample data loaded')
+});
+document.addEventListener('submit',async e=>{e.preventDefault();const f=e.target,v=Object.fromEntries(new FormData(f));
+  if(f.id==='ff')run(async()=>{const n=v.n.trim();if(S.fields.some(x=>x.name.toLowerCase()===n.toLowerCase()))throw new Error('That field already exists.');await S.db.collection('fields').add({name:n});f.reset()},'Field added');
+  if(f.id==='tf')run(async()=>{await S.db.collection('tasks').add({title:v.title.trim(),desc:v.desc.trim(),field:v.field,assigneeId:v.who,due:v.due,statuses:{},createdAt:Date.now()});f.reset()},'Task added');
+  if(f.id==='lf')run(()=>S.auth.signInWithEmailAndPassword(v.e,v.p));
+  if(f.id==='rf')run(async()=>{await S.db.collection('interns').add({name:v.n.trim(),field:v.f,claimedBy:''});f.reset()},'Intern added');
+});
+document.addEventListener('toggle',e=>{const d=e.target;if(d.dataset&&d.dataset.o)S.open[d.dataset.o]=d.open},true);
+document.addEventListener('change',e=>{if(e.target.id==='flt'){S.filter=e.target.value;render()}else if(e.target.id==='iflt'){S.ifil=e.target.value;render()}else if(e.target.id==='pflt'){S.pfil=e.target.value;render()}});
+
+let started=false;
+function loginView(){$('#brand').textContent='🛠 Admin Portal';$('#app').innerHTML=`<div class="card" style="max-width:380px;margin:40px auto"><h2>Admin sign in</h2><form id="lf"><input name="e" type="email" placeholder="Email" required><input name="p" type="password" placeholder="Password" required><button>Sign in</button></form></div>`}
+let roster=false,signingIn=null,scope=null;const unsubs={};
+const sub=(k,name,fn,q)=>{if(unsubs[k])unsubs[k]();const c=S.db.collection(name);unsubs[k]=(q?q(c):c).onSnapshot(sn=>{S[k]=sn.docs.map(d=>({id:d.id,...d.data()})).sort(fn||(()=>0));S[k+'Ok']=1;if(k==='interns'&&PORTAL!=='admin')subs();render()},e=>{console.error(e);S[k+'Ok']=1;if(k==='interns'||k==='fields')roster=false;toast('Sync problem: '+e.message);render()})};
+function subRoster(){if(roster)return;roster=true;sub('fields','fields');sub('interns','interns')}
+const byNew=(a,b)=>(b.createdAt||0)-(a.createdAt||0);
+function progSub(q){if(unsubs.prog)unsubs.prog();unsubs.prog=(q?q(S.db.collection('progress')):S.db.collection('progress')).onSnapshot(sn=>{S.prog={};sn.docs.forEach(d=>S.prog[d.id]=d.data());render()},e=>console.error(e))}
+// Admin listens to everything. An intern listens only to their own field's tasks and their own progress.
+function subs(){if(!S.uid)return;
+ if(PORTAL==='admin'){if(scope==='all')return;scope='all';sub('tasks','tasks',byNew);progSub();return}
+ const me=S.interns.find(i=>i.claimedBy===S.uid),key=me?me.field+'|'+me.id:'';if(key===scope)return;scope=key;
+ if(!me){['tasks','prog'].forEach(k=>{if(unsubs[k]){unsubs[k]();unsubs[k]=null}});S.tasks=[];S.prog={};return}
+ sub('tasks','tasks',byNew,c=>c.where('field','==',me.field));progSub(c=>c.where('internId','==',me.id))}
+// One anonymous account per device: wait for the saved login to load first, create a new one only if none exists.
+let authP;const waitAuth=()=>authP||(authP=new Promise(res=>{const un=S.auth.onAuthStateChanged(u=>{un();res(u)})}));
+async function ensureUser(){await waitAuth();const u=S.auth.currentUser;if(u)return u;if(!signingIn)signingIn=S.auth.signInAnonymously().then(r=>{console.log('Created one-time anonymous UID:',r.user.uid);return r.user}).finally(()=>{signingIn=null});return signingIn}
+(function boot(){try{
+ firebase.initializeApp(window.FIREBASE_CONFIG);S.auth=firebase.auth();S.db=firebase.firestore();S.db.enablePersistence({synchronizeTabs:true}).catch(e=>console.warn('Offline cache unavailable:',e.code));
+ S.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(e=>console.warn('Saved sign-in is not available here:',e)).then(()=>S.auth.onAuthStateChanged(async u=>{try{
+  if(PORTAL==='admin'){if(!u){loginView();return}const a=await S.db.doc('admins/'+u.uid).get();if(!a.exists){toast('This account is not an admin.');await S.auth.signOut();return}S.uid=u.uid;S.admin=true;subRoster();subs();return}
+  S.uid=u?u.uid:null;S.ready=true;subRoster();subs();render();
+ }catch(e){console.error(e);toast(e.message)}}));
+}catch(e){console.error(e);$('#app').innerHTML='<p class="empty">Could not start. Check firebase-config.js.</p>'}})();
+setInterval(()=>{if(S.uid)render()},300000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&S.uid)render()});
+window.addEventListener('offline',()=>toast('You are offline. Changes will sync when you reconnect.'));window.addEventListener('online',()=>toast('Back online',1));
+</script></body></html>
